@@ -4,7 +4,7 @@ COPY package.json /ghost
 RUN npm install --verbose && \
   npm install -g grunt-cli && \
   npm install -g knex-migrator
-COPY . /ghost
+ADD . /ghost
 ENV NODE_ENV testing
 RUN grunt init && \
   knex-migrator init
