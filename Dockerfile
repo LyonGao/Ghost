@@ -1,5 +1,4 @@
 FROM node:boron
-RUN mkdir -p /ghost
 WORKDIR /ghost
 COPY package.json /ghost
 RUN npm install --verbose && \
