@@ -1,10 +1,11 @@
 FROM node:boron
+RUN mkdir -p /ghost
 WORKDIR /ghost
 COPY package.json /ghost
 RUN npm install --verbose && \
   npm install -g grunt-cli && \
   npm install -g knex-migrator
-ADD . /ghost
+COPY . /ghost
 ENV NODE_ENV testing
 RUN grunt init && \
   knex-migrator init
