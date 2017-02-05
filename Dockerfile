@@ -1,5 +1,4 @@
 FROM node:boron
-RUN mkdir -p /ghost
 WORKDIR /ghost
 COPY package.json /ghost
 RUN npm install --verbose && \
@@ -7,7 +6,7 @@ RUN npm install --verbose && \
   npm install -g knex-migrator
 COPY . /ghost
 ENV NODE_ENV testing
-RUN grunt init && \
+RUN grunt init --force && \
   knex-migrator init
 EXPOSE 2369
 CMD ["npm", "start"]
