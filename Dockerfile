@@ -1,12 +1,21 @@
-FROM node:boron
+FROM ubuntu:latest
+
+RUN apt-get update && apt-get install curl && \
+  curl -sL https://deb.nodesource.com/setup_6.x | -E bash - && \
+  apt-get install -y nodejs && \
+  curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
+  echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
+  apt-get install yarn
+
+RUN mkdir -p /ghost
 WORKDIR /ghost
 COPY package.json /ghost
-RUN npm install --verbose && \
-  npm install -g grunt-cli && \
-  npm install -g knex-migrator
+RUN yarn install && \
+  yarn global add grunt-cli && \
+  yarn global add knex-migrator
 COPY . /ghost
 ENV NODE_ENV testing
-RUN pwd && ls -al && grunt init && \
+RUN grunt init && \
   knex-migrator init
 EXPOSE 2369
 CMD ["npm", "start"]
