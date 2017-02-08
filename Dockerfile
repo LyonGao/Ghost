@@ -15,7 +15,7 @@ RUN npm install yarnpkg -g --verbose && yarn install && \
   yarn global add knex-migrator
 COPY . /ghost
 ENV NODE_ENV testing
-RUN ls -al core/client && grunt init && \
+RUN grunt prod && \
   knex-migrator init
 EXPOSE 2369
 CMD ["npm", "start"]
